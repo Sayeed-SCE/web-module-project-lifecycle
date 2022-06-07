@@ -7,6 +7,7 @@ export default class App extends React.Component {
 
   state ={
     todos: [],
+    error: " ",
   }
   fetchAllTodos = () => {
     axios.get(URL)
@@ -14,7 +15,7 @@ export default class App extends React.Component {
        this.setState({ ...this.state, todos: res.data.data})
       })
       .catch(err => {
-        debugger
+        this.setState({ ...this.state, error: err.response.data.message})
       })
 
   }
@@ -25,7 +26,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div> 
-        <div id = "error">Error: No error here</div>
+        <div id = "error">Error:{this.state.error}</div>
         <div id= "todos">
           <h2>Todos:</h2>
           {
