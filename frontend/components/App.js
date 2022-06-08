@@ -26,13 +26,13 @@ export default class App extends React.Component {
       this.resetForm()
     })
     .catch(this.setAxiosResponseError)
-
-    onTodoFormSubmit = evt => {
-      evt.preventDefault()
-      this.postNewTodo()
-    }
-
   }
+
+  onTodoFormSubmit = evt => {
+    evt.preventDefault()
+    this.postNewTodo()
+  }
+
   fetchAllTodos = () => {
     axios.get(URL)
       .then(res => {
@@ -55,13 +55,18 @@ export default class App extends React.Component {
     })
     .catch(this.setAxiosResponseError)
   }
+
   toggleDisplayCompleteds = () => {
     this.setState({ ...this.state, displayCompleteds: !this.state.displayCompleteds})
   }
+
+
   componentDidMount(){
     //fetch all todos from server
     this.fetchAllTodos()
   }
+
+
   render() {
     return (
       <div> 
@@ -72,7 +77,7 @@ export default class App extends React.Component {
             this.state.todos.reduce((acc, td)=> { 
               if (this.state.displayCompleteds || !td.completed) return acc.concat(
 
-                <div onClick={this.toggleCompleted(td.id) }key={td.id}>{td.name}{td.completed ? ' ✔️' : ' ' }</div>
+                <div onClick={this.toggleCompleted(td.id) }key={td.id}>{td.name}{td.completed ?  '✅' :  '👎🏻' }</div>
 
               )
               return acc
@@ -83,7 +88,7 @@ export default class App extends React.Component {
       
         </div>
         <form id="todoForm" onSubmit={this.onTodoFormSubmit}>
-          <input value = {this.state.todoNameInput} onChange={this.todoNameInputChange} type="text" placeholder="Type todo"></input>
+          <input value={this.state.todoNameInput} onChange={this.todoNameInputChange} type="text" placeholder="Type todo"></input>
           <input type="submit"></input>
         </form>
         <button onClick={this.toggleDisplayCompleteds}>{this.state.displayCompleteds ? 'Hide' : 'Show'} Completed</button>
